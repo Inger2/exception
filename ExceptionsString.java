@@ -27,7 +27,7 @@ class StringCalculator {
         String leftPart = equationArray[0];
         String rightPart = equationArray[1];
         checkAllExceptions(equation);
-    return ((int) engine.eval(leftPart) == (int) engine.eval(rightPart));
+        return ((int) engine.eval(leftPart) == (int) engine.eval(rightPart));
     }
 
     void invalidSignException(String equation) throws InvalidSignException {
@@ -51,6 +51,7 @@ class StringCalculator {
             throw new TooManyArgumentsException("Слишком длинное выражение");
         }
     }
+
     void checkAllExceptions(String equation) throws InvalidSignException, FloatNumbersException, TooManyArgumentsException {
         invalidSignException(equation);
         floatNumberException(equation);
