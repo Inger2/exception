@@ -6,7 +6,9 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 public class ExceptionsString {
-    public static void main(String[] args) throws InvalidSignException, FloatNumbersException, TooManyArgumentsException, ScriptException {
+    public static void main(String[] args) throws ScriptException, InvalidSignException,
+            FloatNumbersException,
+            TooManyArgumentsException {
         String equation = "34+435=44+20";
         StringCalculator cs = new StringCalculator();
         System.out.println(cs.stringCompare(equation));
@@ -15,12 +17,16 @@ public class ExceptionsString {
 }
 
 class StringCalculator {
+    private static final int MAX_OPERAND_NUMBER = 200;
+
     String[] splitEquation(String equation) {
         String splitRegex = "=";
         return equation.split(splitRegex);
     }
 
-    boolean stringCompare(String equation) throws ScriptException, InvalidSignException, FloatNumbersException, TooManyArgumentsException {
+    boolean stringCompare(String equation) throws ScriptException, InvalidSignException,
+            FloatNumbersException,
+            TooManyArgumentsException {
         ScriptEngineManager manager = new ScriptEngineManager();
         ScriptEngine engine = manager.getEngineByName("JavaScript");
         String[] equationArray = splitEquation(equation);
@@ -47,12 +53,14 @@ class StringCalculator {
         String splitRegex = "[-+*/]";
         String[] leftPart = arrayEquation[0].split(splitRegex);
         String[] rightPart = arrayEquation[1].split(splitRegex);
-        if (leftPart.length > 200 || rightPart.length > 200) {
+        if (leftPart.length > MAX_OPERAND_NUMBER || rightPart.length > MAX_OPERAND_NUMBER) {
             throw new TooManyArgumentsException("Слишком длинное выражение");
         }
     }
 
-    void checkAllExceptions(String equation) throws InvalidSignException, FloatNumbersException, TooManyArgumentsException {
+    void checkAllExceptions(String equation) throws InvalidSignException,
+            FloatNumbersException,
+            TooManyArgumentsException {
         invalidSignException(equation);
         floatNumberException(equation);
         tooManyArgumentsException(equation);
@@ -69,12 +77,6 @@ class InvalidSignException extends Exception {
 
 class FloatNumbersException extends Exception {
     public FloatNumbersException(String message) {
-        super(message);
-    }
-}
-
-class TooManyArgumentsException extends Exception {
-    public TooManyArgumentsException(String message) {
         super(message);
     }
 }
