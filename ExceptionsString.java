@@ -7,23 +7,9 @@ import javax.script.ScriptException;
 
 public class ExceptionsString {
     public static void main(String[] args) throws InvalidSignException, FloatNumbersException, TooManyArgumentsException, ScriptException {
-        String equation = "34+435=449+20";
+        String equation = "34+435=44+20";
         StringCalculator cs = new StringCalculator();
-        try {
-            cs.invalidSignException(equation);
-            cs.floatNumberException(equation);
-            cs.tooManyArgumentsException(equation);
-            System.out.println(cs.stringCompare(equation));
-        } catch (InvalidSignException e) {
-            throw new RuntimeException(e);
-        } catch (FloatNumbersException e) {
-            throw new RuntimeException(e);
-        } catch (TooManyArgumentsException e) {
-            throw new RuntimeException(e);
-        } catch (ScriptException e) {
-            throw new RuntimeException(e);
-        }
-
+        System.out.println(cs.stringCompare(equation));
 
     }
 }
@@ -34,13 +20,14 @@ class StringCalculator {
         return equation.split(splitRegex);
     }
 
-    boolean stringCompare(String equation) throws ScriptException {
+    boolean stringCompare(String equation) throws ScriptException, InvalidSignException, FloatNumbersException, TooManyArgumentsException {
         ScriptEngineManager manager = new ScriptEngineManager();
         ScriptEngine engine = manager.getEngineByName("JavaScript");
         String[] equationArray = splitEquation(equation);
         String leftPart = equationArray[0];
         String rightPart = equationArray[1];
-        return ((int) engine.eval(leftPart) == (int) engine.eval(rightPart));
+        checkAllExceptions(equation);
+    return ((int) engine.eval(leftPart) == (int) engine.eval(rightPart));
     }
 
     void invalidSignException(String equation) throws InvalidSignException {
@@ -63,6 +50,11 @@ class StringCalculator {
         if (leftPart.length > 200 || rightPart.length > 200) {
             throw new TooManyArgumentsException("Слишком длинное выражение");
         }
+    }
+    void checkAllExceptions(String equation) throws InvalidSignException, FloatNumbersException, TooManyArgumentsException {
+        invalidSignException(equation);
+        floatNumberException(equation);
+        tooManyArgumentsException(equation);
     }
 
 }
