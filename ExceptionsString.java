@@ -49,7 +49,7 @@ class StringCalculator {
         }
     }
 
-    void ValidateOperandCount(String equation) throws TooManyArgumentsException {
+    void validateOperandCount(String equation) throws TooManyArgumentsException {
         String[] arrayEquation = splitEquation(equation);
         String splitRegex = "[-+*/]";
         String[] leftPart = arrayEquation[0].split(splitRegex);
@@ -64,7 +64,7 @@ class StringCalculator {
             TooManyArgumentsException {
         validateSign(equation);
         validateIfInteger(equation);
-        ValidateOperandCount(equation);
+        validateOperandCount(equation);
     }
 
 }
