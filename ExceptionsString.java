@@ -80,3 +80,9 @@ class FloatNumbersException extends Exception {
         super(message);
     }
 }
+
+class TooManyArgumentsException extends Exception {
+    public TooManyArgumentsException(String message) {
+        super(message);
+    }
+}
