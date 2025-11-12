@@ -1,10 +1,8 @@
-package exceptions;
-
 public class ExceptionsString {
     public static void main(String[] args) throws InvalidSignException,
             FloatNumbersException,
             TooManyArgumentsException {
-        String equation = "5*2-2*3=4";
+        String equation = "5*2-2*3=2+2";
         StringCalculator cs = new StringCalculator();
         System.out.println(cs.compareNumbers(equation));
 
@@ -17,6 +15,24 @@ class StringCalculator {
     String[] splitEquation(String equation) {
         String splitRegex = "=";
         return equation.split(splitRegex);
+    }
+
+    String[] deleteEmptyStrings(String[] arr) {
+        int count = arr.length;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i].isEmpty()) {
+                count--;
+            }
+        }
+        String[] newString = new String[count];
+        int index = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (!arr[i].isEmpty()) {
+                newString[index] = arr[i];
+                index++;
+            }
+        }
+        return newString;
     }
 
     int evaluateExpression(String equation) throws InvalidSignException,
@@ -35,20 +51,7 @@ class StringCalculator {
 
             }
         }
-
-        for (int i = 0; i < equationSplit.length; i++) {
-            if (equationSplit[i].isEmpty()) {
-                count--;
-            }
-        }
-        String[] secondEquationSplit = new String[count];
-        int index = 0;
-        for (int i = 0; i < equationSplit.length; i++) {
-            if (!equationSplit[i].isEmpty()) {
-                secondEquationSplit[index] = equationSplit[i];
-                index++;
-            }
-        }
+        String[] secondEquationSplit = deleteEmptyStrings(equationSplit);
         int left;
         int right;
 
@@ -69,22 +72,7 @@ class StringCalculator {
                 }
             }
         }
-        int secondCount = secondEquationSplit.length;
-        for (int i = 0; i < secondEquationSplit.length; i++) {
-            if (secondEquationSplit[i].isEmpty()) {
-                secondCount--;
-            }
-
-        }
-        String[] newEquationSplit = new String[secondCount];
-        int secondIndex = 0;
-        for (int i = 0; i < secondEquationSplit.length; i++) {
-            if (!secondEquationSplit[i].isEmpty()) {
-                newEquationSplit[secondIndex] = secondEquationSplit[i];
-                secondIndex++;
-            }
-        }
-
+        String[] newEquationSplit = deleteEmptyStrings(secondEquationSplit);
         // массив с пустыми строками -> считаю количество пустых строк -> созадю новый массив поменьше -> переношу в него все кроме пустых строк
 
         for (String equationCalc : newEquationSplit) {
